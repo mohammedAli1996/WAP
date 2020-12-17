@@ -4,9 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class CarModel {
+public class CarModel implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -34,9 +35,22 @@ public class CarModel {
 	private String updatedAt = "";
 	
 	private boolean selled = false ;
-	
-	
-	
+
+	public CarModel(int id, String carName, int price, int sellPrice, int seatsCount, String dateOfBuy, String clientName, String addedBy, String createdAt, String modefiedBy, String updatedAt, boolean selled) {
+		this.id = id;
+		this.carName = carName;
+		this.price = price;
+		this.sellPrice = sellPrice;
+		this.seatsCount = seatsCount;
+		this.dateOfBuy = dateOfBuy;
+		this.clientName = clientName;
+		this.addedBy = addedBy;
+		this.createdAt = createdAt;
+		this.modefiedBy = modefiedBy;
+		this.updatedAt = updatedAt;
+		this.selled = selled;
+	}
+
 	public CarModel() {}
 
 	public CarModel(String carName, int price, int sellPrice, int seatsCount, String dateOfBuy, String clientName,
