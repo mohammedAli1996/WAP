@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class Details implements Serializable {
 
-    String email ;
+	private static final long serialVersionUID = 1L;
+
+	String email ;
     String Date;
 
     public Details() {

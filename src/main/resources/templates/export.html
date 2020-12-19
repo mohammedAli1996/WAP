@@ -7,11 +7,10 @@
 <div class="container">
     <div class="jumbotron">
         	
-	<h1>System Params</h1>
-    <form action="#" th:action="@{/cars/save}" th:object="${car}" method="post">
-    	<p>carName: <input type="text" th:field="*{carName}" required/></p>
-    	<p>price: <input type="number" th:field="*{price}" min="0" required/></p>
-    	<p>seatsCount: <input type="number" th:field="*{seatsCount}" min="1" max="20" required/></p>
+	<h1>Export Setting</h1>
+    <form action="#" th:action="@{/export/send}" th:object="${export}" method="post">
+    	<p>email: <input type="text" th:field="*{email}" required/></p>
+    	<p>Date: <input type="date" th:field="*{Date}" min="0" required/></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 	

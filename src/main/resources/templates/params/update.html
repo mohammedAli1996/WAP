@@ -9,8 +9,8 @@
         	
 	<h1>Update System Params</h1>
     <form action="#" th:action="@{/params/set}" th:object="${params}" method="post">
-    	<p>defaultSeatsCount: <input type="text" th:field="*{defaultSeatsCount}" required/></p>
-    	<p>sellPriceRatio: <input type="text" th:field="*{sellPriceRatio}" required/></p>
+    	<p>defaultSeatsCount: <input type="number" th:field="*{defaultSeatsCount}" min="1" max="20" required/></p>
+    	<p>sellPriceRatio: <input type="number" th:field="*{sellPriceRatio}"  min="1" max="100" required/></p>
     	<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 	

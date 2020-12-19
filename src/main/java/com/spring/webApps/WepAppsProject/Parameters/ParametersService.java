@@ -3,11 +3,14 @@ package com.spring.webApps.WepAppsProject.Parameters;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import com.spring.webApps.WepAppsProject.Aspect.ServiceException;
 
 @Service
+@CacheConfig(cacheNames={"employee"})
 public class ParametersService {
 
 	@Autowired
@@ -32,6 +35,7 @@ public class ParametersService {
 		return this.paramsRepo.findAll().get(0).getSellPriceRatio();
 	}
 	
+	@CacheEvict(allEntries=true)  
 	public int setDefaultSeatsCount(int seatsCount ) {
 		try {
 			Parameters param = this.paramsRepo.findAll().get(0);
@@ -43,6 +47,7 @@ public class ParametersService {
 		}
 	}
 	
+	@CacheEvict(allEntries=true)  
 	public int setDefaultsellingRatio(int sellingRatio ) {
 		try {
 			Parameters param = this.paramsRepo.findAll().get(0);
@@ -54,6 +59,7 @@ public class ParametersService {
 		}
 	}
 
+	
 	public Parameters getCurrConfig() {
 		return this.paramsRepo.findAll().get(0);
 	}

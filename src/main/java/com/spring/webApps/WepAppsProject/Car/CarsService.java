@@ -1,6 +1,6 @@
 package com.spring.webApps.WepAppsProject.Car;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.spring.webApps.WepAppsProject.Aspect.ConflictException;
 import com.spring.webApps.WepAppsProject.Aspect.ServiceException;
+import com.spring.webApps.WepAppsProject.Details.Details;
+import com.spring.webApps.WepAppsProject.MQ.OrderMessageSender;
 import com.spring.webApps.WepAppsProject.Parameters.ParametersService;
 import com.spring.webApps.WepAppsProject.security.User;
 import com.spring.webApps.WepAppsProject.security.UserRepository;
@@ -28,6 +30,8 @@ public class CarsService {
 	@Autowired
 	private ParametersService paramsService;  
 	
+	@Autowired
+	private OrderMessageSender msgSender ; 
 	
 	@Transactional
 	public int addCar(CarModel car ) {
@@ -36,8 +40,9 @@ public class CarsService {
 				car.setSeatsCount(this.paramsService.getSeatsCount());
 			}
 			car.setVersion(1l);
-			car.setCreatedAt(LocalDateTime.now().toString());
-			this.carRepo.save(car);
+			car.setCreatedAt(LocalDate.now().toString());
+			car = this.carRepo.save(car);
+			msgSender.sendOrderCar(car);
 			return 0 ; 
 		}catch(Exception e){
 			throw new ServiceException() ;
@@ -98,7 +103,7 @@ public class CarsService {
 			carFromDb.setPrice(car.getPrice());
 			carFromDb.setSeatsCount(car.getSeatsCount());
 			carFromDb.setSellPrice(car.getSellPrice());
-			carFromDb.setUpdatedAt(LocalDateTime.now().toString());
+			carFromDb.setUpdatedAt(LocalDate.now().toString());
 			carFromDb.setModefiedBy(this.get_current_User().getUsername());
 			this.carRepo.save(carFromDb);
 			return 0 ;
@@ -141,7 +146,7 @@ public class CarsService {
 			dbCar.setVersion(version);
 			dbCar.setClientName(car.getClientName());
 			dbCar.setSellPrice(this.paramsService.getPriceRatio() * car.getPrice());
-			dbCar.setDateOfBuy(LocalDateTime.now().toString());
+			dbCar.setDateOfBuy(LocalDate.now().toString());
 			dbCar.setSelled(true);
 			this.carRepo.save(dbCar);
 			return 0 ;
@@ -169,5 +174,14 @@ public class CarsService {
 	    }
 	    return null  ; 
     }
+
+
+	public void export(Details details) {
+		try {
+			this.msgSender.sendOrderdetails(details);
+		}catch(Exception e ) {
+			throw new ServiceException();
+		}
+	}
 	
 }

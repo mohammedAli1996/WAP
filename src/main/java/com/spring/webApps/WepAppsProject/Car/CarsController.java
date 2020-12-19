@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.webApps.WepAppsProject.Details.Details;
+import com.spring.webApps.WepAppsProject.Parameters.ParametersService;
+
 
 @RestController
 public class CarsController {
@@ -15,6 +18,8 @@ public class CarsController {
 	@Autowired
 	private CarsService carService ; 
 
+	@Autowired 
+	private ParametersService paramsService ; 
 	
 	
 	//get cars : all-sold-not sold
@@ -44,7 +49,9 @@ public class CarsController {
 	@RequestMapping(method = RequestMethod.GET , value = "/cars/sell/{id}")
 	public ModelAndView sellCargGet(@PathVariable int id ){
 		ModelAndView mav = new ModelAndView("cars/sell");
-	    mav.addObject("car",this.carService.getById(id));
+		CarModel carModel = this.carService.getById(id);
+		carModel.setSellPrice(carModel.getPrice() * paramsService.getPriceRatio());
+	    mav.addObject("car",carModel);
 	    return mav ;
 	}
 	
@@ -102,5 +109,21 @@ public class CarsController {
 		return this.getAllCars() ;
 	}
 	//
+	
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/export/view")
+	public ModelAndView exportSettings(){
+		ModelAndView mav = new ModelAndView("export");
+		mav.addObject("export", new Details());
+		return mav ; 
+	}
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/export/send")
+	public ModelAndView export(@ModelAttribute Details details ){
+		this.carService.export(details);
+		return getAllCars();
+	}
+	
 	
 }

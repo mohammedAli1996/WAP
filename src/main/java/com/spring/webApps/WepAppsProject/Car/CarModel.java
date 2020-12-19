@@ -20,7 +20,7 @@ public class CarModel implements Serializable {
 	@Version
 	private Long version  = 1l ; 
 	
-	private String carName = "" ; 
+	private String carName = " " ; 
 	
 	private int price = 0; 
 	
@@ -28,18 +28,18 @@ public class CarModel implements Serializable {
 	
 	private int seatsCount   = 0 ; 
 	
-	private String dateOfBuy = ""; 
+	private String dateOfBuy = " "; 
 	
 	private String clientName = "none";
 
 	
-	private String addedBy = ""; 
+	private String addedBy = " "; 
 	
-	private String createdAt = "" ;
+	private String createdAt = " " ;
 	
-	private String modefiedBy = ""; 
+	private String modefiedBy = " "; 
 	
-	private String updatedAt = "";
+	private String updatedAt = " ";
 	
 	private boolean selled = false ;
 

@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.authorizeRequests()
 		.antMatchers("/cars/**").authenticated()
 		.antMatchers("/params/**").authenticated()
+		.antMatchers("/export/**").authenticated()
 		.and()
 		.formLogin().defaultSuccessUrl("/index")
 		.loginPage("/login").permitAll()
