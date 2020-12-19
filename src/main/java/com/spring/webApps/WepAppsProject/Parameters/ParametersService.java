@@ -5,6 +5,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.webApps.WepAppsProject.Aspect.ServiceException;
+
 @Service
 public class ParametersService {
 
@@ -37,7 +39,7 @@ public class ParametersService {
 			this.paramsRepo.save(param);
 			return 0 ; 
 		}catch(Exception e ) {
-			return 1 ;
+			throw new ServiceException();
 		}
 	}
 	
@@ -48,7 +50,7 @@ public class ParametersService {
 			this.paramsRepo.save(param);
 			return 0 ; 
 		}catch(Exception e ) {
-			return 1 ;
+			throw new ServiceException();
 		}
 	}
 

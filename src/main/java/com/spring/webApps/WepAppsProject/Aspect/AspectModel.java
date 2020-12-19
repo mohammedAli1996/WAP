@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import com.spring.webApps.WepAppsProject.Car.CarsService;
-import com.spring.webApps.WepAppsProject.Parameters.ParametersService;
 import com.spring.webApps.WepAppsProject.security.User;
 import com.spring.webApps.WepAppsProject.security.UserRepository;
 
@@ -25,31 +24,25 @@ public class AspectModel {
 	
 	//logging 
 	Logger carsLogger =LoggerFactory.getLogger(CarsService.class);
-	Logger paramsLogger = LoggerFactory.getLogger(ParametersService.class);
 	
 	@Autowired
 	private UserRepository userRepo ; 
 	
 	
-	/*
+	
 	@Before("execution(* com.spring.webApps.WepAppsProject.Car.CarsController..*(..)))")
 	public void secureCarsService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting Cars Controller methods ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
+			try {
+			User user = get_current_User();    
+			user.flatUserDetailes();   
+			}catch(Exception e){
+				carsLogger.info("anonymous user ");
+			}
 	}
-	*/
-	
-	/*
-	@Before("execution(* com.spring.webApps.WepAppsProject.Parameters..*(..)))")
-	public void secureParamsService(JoinPoint  proceedingJoinPoint)  {
-			System.out.println("intercepting Parameters Controller ");
-			printFunctionCallInfo(proceedingJoinPoint);
-			//User user = get_current_User();    
-			//user.flatUserDetailes();   
-	}
-*/
+		
+
 	
 	private User get_current_User() {
 		String username ; 

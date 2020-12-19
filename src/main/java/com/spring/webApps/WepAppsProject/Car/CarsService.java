@@ -8,9 +8,15 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.spring.webApps.WepAppsProject.Aspect.ServiceException;
 import com.spring.webApps.WepAppsProject.Parameters.ParametersService;
+import com.spring.webApps.WepAppsProject.security.User;
+import com.spring.webApps.WepAppsProject.security.UserRepository;
 
 @Service
 public class CarsService {
@@ -32,7 +38,7 @@ public class CarsService {
 			this.carRepo.save(car);
 			return 0 ; 
 		}catch(Exception e){
-			return 1 ;
+			throw new ServiceException() ;
 		}
 	}
 	
@@ -85,10 +91,11 @@ public class CarsService {
 			carFromDb.setSeatsCount(car.getSeatsCount());
 			carFromDb.setSellPrice(car.getSellPrice());
 			carFromDb.setUpdatedAt(LocalDateTime.now().toString());
+			carFromDb.setModefiedBy(this.get_current_User().getUsername());
 			this.carRepo.save(carFromDb);
 			return 0 ;
 		}else {
-			return 1 ; 
+			throw new ServiceException() ; 
 		}
 	}
 	
@@ -98,7 +105,7 @@ public class CarsService {
 			this.carRepo.deleteById(carId);
 			return 0 ; 
 		}catch(Exception e ) {
-			return 1 ; 
+			throw new ServiceException() ; 
 		}
 	}
 	
@@ -127,8 +134,28 @@ public class CarsService {
 			return 0 ;
 		}else {
 			System.out.println("not found");
-			return 1 ; 
+			throw new ServiceException() ; 
 		}
 	}
+	
+	
+	
+	@Autowired
+	private UserRepository userRepo ; 
+	
+	private User get_current_User() {
+		String username ; 
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    Object principal =  auth.getPrincipal();
+	    if(principal instanceof UserDetails) {
+	    	username = ((UserDetails) principal).getUsername() ; 
+		    for(User user : this.userRepo.findAll()) {
+		    	if(user.getUsername().equalsIgnoreCase(username)) {
+		    		return user ; 
+		 		}
+		 	}
+	    }
+	    return null  ; 
+    }
 	
 }
