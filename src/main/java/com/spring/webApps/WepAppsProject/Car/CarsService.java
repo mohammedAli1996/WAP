@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.spring.webApps.WepAppsProject.Aspect.ConflictException;
 import com.spring.webApps.WepAppsProject.Aspect.ServiceException;
 import com.spring.webApps.WepAppsProject.Parameters.ParametersService;
 import com.spring.webApps.WepAppsProject.security.User;
@@ -34,6 +35,7 @@ public class CarsService {
 			if(car.getSeatsCount() == 0 ) {
 				car.setSeatsCount(this.paramsService.getSeatsCount());
 			}
+			car.setVersion(1l);
 			car.setCreatedAt(LocalDateTime.now().toString());
 			this.carRepo.save(car);
 			return 0 ; 
@@ -83,7 +85,13 @@ public class CarsService {
 	public int updateCar(CarModel car ) {
 		Optional<CarModel> optional = this.carRepo.findById(car.getId());
 		if(optional.isPresent()) {
-			CarModel carFromDb = optional.get(); 
+			if(car.getVersion() != optional.get().getVersion()) {
+				throw new ConflictException();
+			}
+			CarModel carFromDb = optional.get();
+			Long version = carFromDb.getVersion(); 
+			version += 1l ; 
+			carFromDb.setVersion(version);
 			carFromDb.setCarName(car.getCarName());
 			carFromDb.setClientName(car.getClientName());
 			carFromDb.setDateOfBuy(car.getDateOfBuy());

@@ -178,6 +178,14 @@ public class CarModel implements Serializable {
 
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	} 
 	
 	
