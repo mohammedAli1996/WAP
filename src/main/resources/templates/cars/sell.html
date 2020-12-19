@@ -10,6 +10,7 @@
 	<h1>sell Car</h1>
     <form action="#" th:action="@{/cars/sell}" th:object="${car}" method="post">
     	<p hidden>ID: <input type="text" th:field="*{id}" readonly/></p>
+    	<p hidden>version: <input type="text" th:field="*{version}" readonly/></p>
     	<p>carName: <input type="text" th:field="*{carName}" readonly/></p>
     	<p>price: <input type="text" th:field="*{price}" readonly/></p>
     	<p>seatsCount: <input type="text" th:field="*{seatsCount}" readonly/></p>

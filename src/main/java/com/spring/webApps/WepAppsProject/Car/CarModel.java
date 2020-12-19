@@ -18,7 +18,7 @@ public class CarModel implements Serializable {
     private int id;
 
 	@Version
-	private Long version ; 
+	private Long version  = 1l ; 
 	
 	private String carName = "" ; 
 	

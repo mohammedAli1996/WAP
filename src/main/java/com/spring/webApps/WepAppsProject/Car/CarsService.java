@@ -132,8 +132,13 @@ public class CarsService {
 	public int sellCar(CarModel car ) {
 		Optional<CarModel> optional = this.carRepo.findById(car.getId());
 		if(optional.isPresent()) {
-			System.out.println("found");
-			CarModel dbCar = optional.get(); 
+			if(car.getVersion() != optional.get().getVersion()) {
+				throw new ConflictException();
+			}
+			CarModel dbCar = optional.get();
+			Long version = dbCar.getVersion(); 
+			version += 1l ; 
+			dbCar.setVersion(version);
 			dbCar.setClientName(car.getClientName());
 			dbCar.setSellPrice(this.paramsService.getPriceRatio() * car.getPrice());
 			dbCar.setDateOfBuy(LocalDateTime.now().toString());
@@ -141,7 +146,6 @@ public class CarsService {
 			this.carRepo.save(dbCar);
 			return 0 ;
 		}else {
-			System.out.println("not found");
 			throw new ServiceException() ; 
 		}
 	}
