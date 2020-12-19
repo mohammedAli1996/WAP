@@ -33,8 +33,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http 
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/cars/**").authenticated()
-		.antMatchers("/params/**").authenticated()
 		.and()
 		.formLogin().defaultSuccessUrl("/index")
 		.loginPage("/login").permitAll()

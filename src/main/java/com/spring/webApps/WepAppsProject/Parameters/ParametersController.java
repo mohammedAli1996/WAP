@@ -31,6 +31,8 @@ public class ParametersController {
 	
 	@RequestMapping(method = RequestMethod.POST , value = "/params/set")
 	public ModelAndView setParams(@ModelAttribute Parameters param ){
+		this.paramsService.setDefaultSeatsCount(param.getDefaultSeatsCount());
+		this.paramsService.setDefaultsellingRatio(param.getSellPriceRatio());
 		return getParams();
 	}
 	

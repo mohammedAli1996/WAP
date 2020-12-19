@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+		<table>
+    <thead>
+        <tr>
+            <th> carName </th>
+            <th> price </th>
+            <th> sellPrice </th>
+            <th> seatsCount </th>
+            <th> sellDate </th>
+            <th> clientName </th>
+            <th> addedBy </th>
+            <th> createdAt </th>
+            <th> sold </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${cars.empty}">
+            <td colspan="2"> No Cars Sold </td>
+        </tr>
+        <tr th:each="car : ${cars}">
+            <td><span th:text="${car.carName}"> name </span></td>
+            <td><span th:text="${car.price}"> price </span></td>
+            <td><span th:text="${car.sellPrice}"> sellPrice </span></td>
+            <td><span th:text="${car.seatsCount}"> seatsCount </span></td>
+            <td><span th:text="${car.dateOfBuy}"> sellDate </span></td>
+            <td><span th:text="${car.clientName}"> clientName </span></td>
+            <td><span th:text="${car.addedBy}"> addedBy </span></td>
+            <td><span th:text="${car.createdAt}"> createdAt </span></td>
+            <td><span th:text="${car.selled}"> sold </span></td>
+        </tr>
+    </tbody>
+</table>
+	
+    </div>
+</div>
+</body>
+</html>
+

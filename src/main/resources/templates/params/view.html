@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<!-- Page content goes here -->
+<div class="container">
+    <div class="jumbotron">
+        	
+	<h1>System Params</h1>
+    <form action="#" th:action="@{/cars/save}" th:object="${params}" method="post">
+    	<p>defaultSeatsCount: <input type="text" th:field="*{defaultSeatsCount}" readonly/></p>
+    	<p>sellPriceRatio: <input type="text" th:field="*{sellPriceRatio}" readonly/></p>
+        <a href="/params/update">update Params</a>
+    </form>
+	
+    </div>
+</div>
+</body>
+</html>

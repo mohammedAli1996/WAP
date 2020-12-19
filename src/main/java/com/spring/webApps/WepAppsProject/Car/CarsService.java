@@ -55,6 +55,7 @@ public class CarsService {
 		List<CarModel> result = new ArrayList<CarModel>();
 		for(CarModel car : this.carRepo.findAll()) {
 			if(!car.isSelled()) {
+				car.setSellPrice(car.getPrice() * this.paramsService.getPriceRatio());
 				result.add(car);
 			}
 		}
@@ -116,13 +117,16 @@ public class CarsService {
 	public int sellCar(CarModel car ) {
 		Optional<CarModel> optional = this.carRepo.findById(car.getId());
 		if(optional.isPresent()) {
+			System.out.println("found");
 			CarModel dbCar = optional.get(); 
 			dbCar.setClientName(car.getClientName());
 			dbCar.setSellPrice(this.paramsService.getPriceRatio() * car.getPrice());
 			dbCar.setDateOfBuy(LocalDateTime.now().toString());
+			dbCar.setSelled(true);
 			this.carRepo.save(dbCar);
 			return 0 ;
 		}else {
+			System.out.println("not found");
 			return 1 ; 
 		}
 	}

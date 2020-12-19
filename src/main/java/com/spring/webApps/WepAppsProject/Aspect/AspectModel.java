@@ -30,22 +30,26 @@ public class AspectModel {
 	@Autowired
 	private UserRepository userRepo ; 
 	
-	@Before("execution(* com.spring.webApps.WepAppsProject.CarsController..*(..)))")
+	
+	/*
+	@Before("execution(* com.spring.webApps.WepAppsProject.Car.CarsController..*(..)))")
 	public void secureCarsService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting Cars Controller methods ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			User user = get_current_User();    
-			user.flatUserDetailes();   
+			//User user = get_current_User();    
+			//user.flatUserDetailes();   
 	}
+	*/
 	
-	@Before("execution(* com.spring.webApps.WepAppsProject.ParametersController..*(..)))")
+	/*
+	@Before("execution(* com.spring.webApps.WepAppsProject.Parameters..*(..)))")
 	public void secureParamsService(JoinPoint  proceedingJoinPoint)  {
 			System.out.println("intercepting Parameters Controller ");
 			printFunctionCallInfo(proceedingJoinPoint);
-			User user = get_current_User();    
-			user.flatUserDetailes();   
+			//User user = get_current_User();    
+			//user.flatUserDetailes();   
 	}
-
+*/
 	
 	private User get_current_User() {
 		String username ; 
